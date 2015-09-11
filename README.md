@@ -1,5 +1,4 @@
 # Vanilla Adaptive Maps
-![Vanilla Adaptive Maps](http://jeremycarlson.com)
 A way to include an Adaptive Map, based on [Brad Frost’s Adaptive Maps pattern](http://bradfrostweb.com/blog/post/adaptive-maps/), without requiring an external JavaScript library.
 
 ## Contents
@@ -21,7 +20,7 @@ Quick and easy shortcode to include, based on a street address:
 
 Vanilla Adaptive Maps can be installed as follows:
 
-1. Copy the `vanilla_adaptive_maps` directory into your `wp-content/plugins` directory.
+1. Copy the `vanilla-adaptive-maps` directory into your `wp-content/plugins` directory.
 2. In the WordPress dashboard, navigation to the *Plugins* page
 Locate the menu item that reads “Vanilla Adaptive Maps.”
 3. Click on *Activate.*
