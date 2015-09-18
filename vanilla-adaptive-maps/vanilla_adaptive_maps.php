@@ -28,6 +28,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 class vanilla_adaptive_maps {
 
+  function set_breakpoint( $units = false ) {
+    return '550' . $units;
+  }
+
 	/*
 	 * Adaptive Map
 	 * Generate the HTML from the shortcode [vamap addr="Your Street Address"]
@@ -69,6 +73,10 @@ class vanilla_adaptive_maps {
 	 * Output the individual script for your particular map shortcode
 	 */
 	function print_map_script($map_address_encoded, $map_id) {
+	
+	  // get breakpoint for mobile vs desktop
+	  $breakpoint = vanilla_adaptive_maps::set_breakpoint();
+
 		$script_output = "
 
 <script>
@@ -80,7 +88,7 @@ class vanilla_adaptive_maps {
 		staticSize = '640x320',
 		amap$map_id = {
 			id	: '$map_id',
-			bp : 550,
+			bp : $breakpoint,
 			staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=' + address + '&size=' + staticSize + '&sensor=true',
 			embedMap : '<iframe width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
 		};
@@ -99,9 +107,12 @@ class vanilla_adaptive_maps {
 	 * Output the CSS for the map
 	 */
 	function print_map_styles() {
-		$css = '
+	  // get breakpoint for mobile vs desktop
+	  $breakpoint = vanilla_adaptive_maps::set_breakpoint('px');
 
-<style type="text/css">
+		$css = "
+
+<style type='text/css'>
 .static-img {
   display: block;
 }
@@ -132,7 +143,7 @@ class vanilla_adaptive_maps {
 }
 
 /* Medium Screens */
-@media all and (min-width: 34.375em) {
+@media all and (min-width: $breakpoint) {
   .amap-container {
     display: block;
   }
@@ -143,7 +154,7 @@ class vanilla_adaptive_maps {
 }
 </style>
 
-';
+";
 
 		return $css;
 	}
