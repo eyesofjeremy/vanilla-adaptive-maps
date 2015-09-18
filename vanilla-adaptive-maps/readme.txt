@@ -30,15 +30,13 @@ To include a responsive map in a theme template, write the following PHP:
 
 = What is the breakpoint between mobile and desktop? =
 
-Right now
+Right now, the breakpoint is set at 550px, which was the default in Brad’s model, and seems reasonable to me.
 
 = Can I change the breakpoint for switching from mobile to desktop? =
 
-Um, working on that. You can dig in
+Yes, although you’ll have to modify the plugin. Open `vanilla-adaptive-maps.php` and look for `set_breakpoint`. You can change the number there.
 
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+Right now we are only supporting a pixel-based breakpoint. I want to change that, though.
 
 == Screenshots ==
 
