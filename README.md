@@ -25,6 +25,12 @@ Vanilla Adaptive Maps can be installed as follows:
 Locate the menu item that reads “Vanilla Adaptive Maps.”
 3. Click on *Activate.*
 
+## Usage
+
+To include an adaptive map, just use the shortcode `[vamap]` with your desired address.
+
+E.g.: `[vamap addr="1203 Pearl St, Boulder, CO 80302"]`
+
 ## License
 
 Vanilla Adaptive Maps is licensed under the GPL v2 or later.
@@ -35,7 +41,7 @@ Vanilla Adaptive Maps is licensed under the GPL v2 or later.
 
 > You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-A copy of the license is included in the root of the plugin’s directory. The file is named `LICENSE`.
+A copy of the license is included in the root of the plugin’s directory. The file is named `LICENSE.txt`.
 
 # Credits
 

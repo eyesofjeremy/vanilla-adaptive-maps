@@ -1,0 +1,48 @@
+=== Plugin Name ===
+Contributors: jcdesign
+Tags: responsive, map, google maps, shortcode
+Requires at least: 3.0.1
+Tested up to: 3.4
+Stable tag: 4.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Map any address with a shortcode. Mobile users get a static map; desktop users will see a google map.
+
+== Description ==
+
+A way to include an Adaptive Map, based on [Brad Frost’s Adaptive Maps pattern](http://bradfrostweb.com/blog/post/adaptive-maps/), without requiring an external JavaScript library.
+
+The basic premise is that we should be using mobile devices’ far better-suited mapping applications rather than attempting to frame maps in our own websites. Users w/ larger screens will get a full map in an iframe.
+
+== Installation ==
+
+1. Upload the `vanilla-adaptive-maps` folder to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+
+To use, write a shortcode like this: `[vamap addr="1203 Pearl St, Boulder, CO 80302"]`
+
+To include a responsive map in a theme template, write the following PHP:
+
+`<?php echo do_shortcode('[vamap addr="1203 Pearl St, Boulder, CO 80302"]'); ?>`
+
+== Frequently Asked Questions ==
+
+= What is the breakpoint between mobile and desktop? =
+
+Right now
+
+= Can I change the breakpoint for switching from mobile to desktop? =
+
+Um, working on that. You can dig in
+
+= What about foo bar? =
+
+Answer to foo bar dilemma.
+
+== Screenshots ==
+
+== Changelog ==
+
+= 1.0 =
+* Initial release.
