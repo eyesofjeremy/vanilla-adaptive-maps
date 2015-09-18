@@ -44,7 +44,7 @@ class vanilla_adaptive_maps {
 		
 		$output = '
 <div class="adaptive-map" id="' . $map_id . '">
-<a href="https://maps.google.com/maps?q=' . $map_address_encoded . '" class="map-link" id="' . $link_id . '">' . __('View Map', 'wordpress') . '</a>
+<a href="https://maps.apple.com/maps?q=' . $map_address_encoded . '" class="map-link" id="' . $link_id . '">' . __('View Map', 'wordpress') . '</a>
 ';
 
 		// Script is distinct to this ID, and must be output inline.
