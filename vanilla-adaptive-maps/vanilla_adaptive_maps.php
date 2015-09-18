@@ -23,7 +23,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+  die;
 }
 
 class vanilla_adaptive_maps {
@@ -32,85 +32,85 @@ class vanilla_adaptive_maps {
     return '550' . $units;
   }
 
-	/*
-	 * Adaptive Map
-	 * Generate the HTML from the shortcode [vamap addr="Your Street Address"]
-	 */
-	function map_shortcode( $atts ) {
+  /*
+   * Adaptive Map
+   * Generate the HTML from the shortcode [vamap addr="Your Street Address"]
+   */
+  function map_shortcode( $atts ) {
 
-		// Encode address for mapping. This may need to get beefier.
-		$map_address_encoded = str_replace(' ', '+', $atts['addr']);
+    // Encode address for mapping. This may need to get beefier.
+    $map_address_encoded = str_replace(' ', '+', $atts['addr']);
 
-		// Set up unique ID for the map, so you can have more than one on a page.
-		$mid = uniqid();
-		$map_id = "map$mid";
-		$link_id = "maplink$mid";
-		
-		$output = '
+    // Set up unique ID for the map, so you can have more than one on a page.
+    $mid = uniqid();
+    $map_id = "map$mid";
+    $link_id = "maplink$mid";
+    
+    $output = '
 <div class="adaptive-map" id="' . $map_id . '">
 <a href="https://maps.apple.com/maps?q=' . $map_address_encoded . '" class="map-link" id="' . $link_id . '">' . __('View Map', 'wordpress') . '</a>
 ';
 
-		// Script is distinct to this ID, and must be output inline.
-		$output .= vanilla_adaptive_maps::print_map_script($map_address_encoded, $mid);
-		
-		// For now, we are inlining CSS as well. I realize this is not "the WordPress Way"
-		// but this reduces the requests, and the CSS may eventually be something the user
-		// can tweak. In particular, it would be nice to be able to adjust the breakpoints.
-		$output .= vanilla_adaptive_maps::print_map_styles();
+    // Script is distinct to this ID, and must be output inline.
+    $output .= vanilla_adaptive_maps::print_map_script($map_address_encoded, $mid);
+    
+    // For now, we are inlining CSS as well. I realize this is not "the WordPress Way"
+    // but this reduces the requests, and the CSS may eventually be something the user
+    // can tweak. In particular, it would be nice to be able to adjust the breakpoints.
+    $output .= vanilla_adaptive_maps::print_map_styles();
 
-		$output .= '
+    $output .= '
 </div><!-- adaptive map -->
 ';
-		
-		wp_enqueue_script( 'vanilla-adaptive-maps' );
-		return $output;
-	}
+    
+    wp_enqueue_script( 'vanilla-adaptive-maps' );
+    return $output;
+  }
 
 
-	/*
-	 * Print Map Script
-	 * Output the individual script for your particular map shortcode
-	 */
-	function print_map_script($map_address_encoded, $map_id) {
-	
-	  // get breakpoint for mobile vs desktop
-	  $breakpoint = vanilla_adaptive_maps::set_breakpoint();
+  /*
+   * Print Map Script
+   * Output the individual script for your particular map shortcode
+   */
+  function print_map_script($map_address_encoded, $map_id) {
+  
+    // get breakpoint for mobile vs desktop
+    $breakpoint = vanilla_adaptive_maps::set_breakpoint();
 
-		$script_output = "
+    $script_output = "
 
 <script>
-	document.addEventListener( 'DOMContentLoaded', buildMap$map_id );
-	window.addEventListener( 'resize', buildMap$map_id, false );
+  document.addEventListener( 'DOMContentLoaded', buildMap$map_id );
+  window.addEventListener( 'resize', buildMap$map_id, false );
 
-	function buildMap$map_id() {
-	var	address = '$map_address_encoded',
-		staticSize = '640x320',
-		amap$map_id = {
-			id	: '$map_id',
-			bp : $breakpoint,
-			staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=' + address + '&size=' + staticSize + '&sensor=true',
-			embedMap : '<iframe width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
-		};
+  function buildMap$map_id() {
+  var address = '$map_address_encoded',
+    staticSize = '640x320',
+    amap$map_id = {
+      id  : '$map_id',
+      bp : $breakpoint,
+      staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=' + address + '&size=' + staticSize + '&sensor=true',
+      embedMap : '<iframe width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
+    };
 
-		buildMap(amap$map_id);
-	}
+    buildMap(amap$map_id);
+  }
 </script>
 
 ";
 
-		return $script_output;
-	}
+    return $script_output;
+  }
 
-	/*
-	 * Print Map Styles
-	 * Output the CSS for the map
-	 */
-	function print_map_styles() {
-	  // get breakpoint for mobile vs desktop
-	  $breakpoint = vanilla_adaptive_maps::set_breakpoint('px');
+  /*
+   * Print Map Styles
+   * Output the CSS for the map
+   */
+  function print_map_styles() {
+    // get breakpoint for mobile vs desktop
+    $breakpoint = vanilla_adaptive_maps::set_breakpoint('px');
 
-		$css = "
+    $css = "
 
 <style type='text/css'>
 .static-img {
@@ -156,13 +156,13 @@ class vanilla_adaptive_maps {
 
 ";
 
-		return $css;
-	}
+    return $css;
+  }
 
-	// http://mikejolley.com/2013/12/02/sensible-script-enqueuing-shortcodes/
-	function register_map_script() {
-		wp_register_script( 'vanilla-adaptive-maps', plugins_url( '/js/vanilla_adaptive_maps.js' , __FILE__ ), array(), '1.0.0', true );
-	}
+  // http://mikejolley.com/2013/12/02/sensible-script-enqueuing-shortcodes/
+  function register_map_script() {
+    wp_register_script( 'vanilla-adaptive-maps', plugins_url( '/js/vanilla_adaptive_maps.js' , __FILE__ ), array(), '1.0.0', true );
+  }
 
 } // end class
 
