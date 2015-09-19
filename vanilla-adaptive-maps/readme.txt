@@ -43,6 +43,10 @@ Right now we are only supporting a pixel-based breakpoint. I want to change that
 
 == Screenshots ==
 
+1. Entering shortcode into a post
+2. The map is created above the link
+3. On narrower screens, a static map image will be created instead
+
 == Changelog ==
 
 = 1.0 =
