@@ -1,9 +1,10 @@
 === Plugin Name ===
 Contributors: jcdesign
 Tags: responsive, map, google maps, shortcode
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
+Requires at least: 3.3
+Tested up to: 4.3
+Stable tag: trunk
+Donate link: http://jeremycarlson.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +15,8 @@ Map any address with a shortcode. Mobile users get a static map; desktop users w
 A way to include an Adaptive Map, based on [Brad Frost’s Adaptive Maps pattern](http://bradfrostweb.com/blog/post/adaptive-maps/), without requiring an external JavaScript library.
 
 The basic premise is that we should be using mobile devices’ far better-suited mapping applications rather than attempting to frame maps in our own websites. Users w/ larger screens will get a full map in an iframe.
+
+No styling has been provided, but the link and map are wrapped in `div.adaptive-map`.
 
 == Installation ==
 
