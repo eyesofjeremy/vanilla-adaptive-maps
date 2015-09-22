@@ -1,9 +1,9 @@
-=== Plugin Name ===
+=== Vanilla Adaptive Maps ===
 Contributors: jcdesign
 Tags: responsive, map, google maps, shortcode
 Requires at least: 3.3
 Tested up to: 4.3
-Stable tag: trunk
+Stable tag: 1.0
 Donate link: http://jeremycarlson.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,3 +51,12 @@ Right now we are only supporting a pixel-based breakpoint. I want to change that
 
 = 1.0 =
 * Initial release.
+
+== Upgrade Notice ==
+
+= 1.0 =
+First release. Fly, little plugin, fly! Help with the mappin'!
+
+== Credits ==
+
+All props to [Brad Frost](http://bradfrostweb.com/blog/post/adaptive-maps/) who presented the idea quite a while ago.
