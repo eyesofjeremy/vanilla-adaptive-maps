@@ -5,14 +5,14 @@
  *
  *
  * @link              http://jeremycarlson.com/
- * @since             1.0.0
+ * @since             1.0
  * @package           vanilla_adaptive_maps
  *
  * @wordpress-plugin
  * Plugin Name:       Vanilla Adaptive Maps
  * Plugin URI:        http://jeremycarlson.com/
  * Description:       Include an adaptive map based on a street address with a simple shortcode. No JavaScript library required. Based on Brad Frost’s <a href="http://bradfrostweb.com/blog/post/adaptive-maps">adaptive map pattern</a>
- * Version:           1.0.0
+ * Version:           1.0
  * Author:            Jeremy Carlson
  * Author URI:        http://jeremycarlson.com/
  * License:           GPL-2.0+
