@@ -76,6 +76,12 @@ README.md
 .git
 .gitignore" "$SVNPATH/trunk/"
 
+echo "Moving assets folder"
+mkdir $SVNPATH/assets/
+mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
+svn add $SVNPATH/assets/
+svn delete $SVNPATH/trunk/assets
+
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
