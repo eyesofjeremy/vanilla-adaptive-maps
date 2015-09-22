@@ -4,7 +4,7 @@
 Plugin Name: Vanilla Adaptive Maps
 Plugin URI: https://github.com/eyesofjeremy/vanilla-adaptive-maps/
 Description: Include an adaptive map based on a street address with a simple shortcode. No JavaScript library required.
-Version: 1.0
+Version: 1.0.1
 Author: Jeremy Carlson
 Author http://jeremycarlson.com/
 License: GPL-2.0+

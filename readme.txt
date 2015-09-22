@@ -3,7 +3,7 @@ Contributors: jcdesign
 Tags: responsive, map, google maps, shortcode
 Requires at least: 3.3
 Tested up to: 4.3
-Stable tag: 1.0
+Stable tag: 1.0.1
 Donate link: http://jeremycarlson.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -48,6 +48,9 @@ Right now we are only supporting a pixel-based breakpoint. I want to change that
 3. On narrower screens, a static map image will be created instead
 
 == Changelog ==
+
+= 1.0.1 =
+* Files reorganized. No code changes.
 
 = 1.0 =
 * Initial release.
