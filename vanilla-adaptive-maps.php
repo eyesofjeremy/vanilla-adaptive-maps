@@ -53,16 +53,43 @@ class vanilla_adaptive_maps {
 ';
     
     wp_enqueue_script( 'vanilla-adaptive-maps' );
+
+    // If we need the JavaScript API, let's go get 'er.
+    // The check returns all options.
+    if( vanilla_adaptive_maps::use_jsapi() ) {
+      wp_enqueue_script( 'vanilla-adaptive-maps-google-maps' );
+    }
     return $output;
   }
-
+  
+  /*
+   * Check if we need the JavaScript API
+   */
+  function use_jsapi() {
+  
+    $options = get_option('vamap_style');
+    
+    return ( isset( $options['map_api_key'] ) ) ? $options : FALSE;
+  }
 
   /*
    * Print Map Script
    * Output the individual script for your particular map shortcode
    */
   function print_map_script($map_address_encoded, $map_id) {
-  
+    
+    $options = get_option('vamap_style');
+
+    $map_style = '[]'; // empty array for JS map style
+    $static_style = ''; // empty string for static map style
+    if( isset( $options['map_style'] ) && ! empty( $options['map_style'] ) ) {
+      $static_style = vanilla_adaptive_maps::url_args_from_style_json( $options['map_style'] );
+      
+      if( isset( $options['map_api_key']) ) {
+        $map_style = $options['map_style'];
+      }
+    }
+
     // get breakpoint for mobile vs desktop
     $breakpoint = vanilla_adaptive_maps::set_breakpoint();
 
@@ -78,7 +105,10 @@ class vanilla_adaptive_maps {
     amap$map_id = {
       id  : '$map_id',
       bp : $breakpoint,
-      staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=' + address + '&size=' + staticSize + '&sensor=true',
+      addr : '$map_address_encoded',
+      zoom : 14,
+      style : $map_style,
+      staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=' + address + '&size=' + staticSize + '&style=' + '$static_style' + '&sensor=true',
       embedMap : '<iframe width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
     };
 
@@ -147,10 +177,60 @@ class vanilla_adaptive_maps {
 
     return $css;
   }
+  
+  // http://stackoverflow.com/a/28173229/156645
+  function url_args_from_style_json($mapStyleJson) {
+    $params = [];
+    
+    $json_object = json_decode($mapStyleJson, true);
+
+    foreach ($json_object as $style) {
+      $styleString = '';
+
+      if (isset($style['stylers']) && count($style['stylers']) > 0) {
+        $styleString .= (isset($style['featureType']) ? ('feature:' . $style['featureType']) : 'feature:all') . '|';
+        $styleString .= (isset($style['elementType']) ? ('element:' . $style['elementType']) : 'element:all') . '|';
+
+        foreach ($style['stylers'] as $styler) {
+          $propertyname = array_keys($styler)[0];
+          $propertyval = str_replace('#', '0x', $styler[$propertyname]);
+          $styleString .= $propertyname . ':' . $propertyval . '|';
+        }
+      }
+
+      $styleString = substr($styleString, 0, strlen($styleString) - 1);
+
+      $params[] = 'style=' . $styleString;
+    }
+
+    return implode("&", $params);
+  }
 
   // http://mikejolley.com/2013/12/02/sensible-script-enqueuing-shortcodes/
   function register_map_script() {
-    wp_register_script( 'vanilla-adaptive-maps', plugins_url( '/js/vanilla_adaptive_maps.js' , __FILE__ ), array(), '1.0.0', true );
+    wp_register_script(
+      'vanilla-adaptive-maps', // script hook
+      plugins_url( '/js/vanilla_adaptive_maps.js' , __FILE__ ), // script location
+      array(), // dependencies
+      '1.0.0', // script version
+      true // in footer?
+    );
+    
+    // If we need the JavaScript API, let's go get 'er.
+    // The check returns all options.
+    $use_api = vanilla_adaptive_maps::use_jsapi();
+    
+    if( $use_api ) {
+      $api_key = $use_api['map_api_key'];
+
+      wp_register_script(
+        'vanilla-adaptive-maps-google-maps', // script hook
+        'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true&key=' . $api_key, // script location
+        array(), // dependencies
+        '1.0.0', // script version
+        true // in footer?
+      );
+    }
   }
 
 } // end class
@@ -158,3 +238,6 @@ class vanilla_adaptive_maps {
 $adaptiveMap = new vanilla_adaptive_maps();
 add_shortcode( 'vamap', array($adaptiveMap, 'map_shortcode') );
 add_action( 'wp_enqueue_scripts', array($adaptiveMap, 'register_map_script') );
+
+// Add options for the plugin
+include('vamaps-options.php');
