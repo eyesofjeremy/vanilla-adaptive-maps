@@ -89,6 +89,15 @@ class vanilla_adaptive_maps {
         $map_style = $options['map_style'];
       }
     }
+    
+    if( isset( $options['map_icon'] ) ) {
+      $map_icon = wp_get_attachment_url( $options['map_icon'] );
+      $static_icon = "icon:$map_icon|";
+    } else {
+      $map_icon = '';
+      $static_icon = '';
+    }
+    
 
     // get breakpoint for mobile vs desktop
     $breakpoint = vanilla_adaptive_maps::set_breakpoint();
@@ -107,8 +116,9 @@ class vanilla_adaptive_maps {
       bp : $breakpoint,
       addr : '$map_address_encoded',
       zoom : 14,
+      icon : '$map_icon',
       style : $map_style,
-      staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=' + address + '&size=' + staticSize + '&style=' + '$static_style' + '&sensor=true',
+      staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=$static_icon' + address + '&size=' + staticSize + '&style=' + '$static_style' + '&sensor=true',
       embedMap : '<iframe width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
     };
 

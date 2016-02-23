@@ -2,10 +2,12 @@ function buildMap(amap) {
   var sw = document.body.clientWidth;
 
   if (sw > amap.bp) {
-    if ( document.getElementById(amap.id + 'embed') == null ) {
-      if ( amap.style !== '' ) {
+    if ( amap.style !== '' ) {
+      if ( document.getElementById(amap.id + 'embed') == null ) {
         buildJS(amap);
-      } else {
+      }
+    } else {
+      if ( document.getElementById(amap.id + 'embed') == null ) {
         buildEmbed(amap);
       }
     }
@@ -16,9 +18,36 @@ function buildMap(amap) {
   }
 }
 
-/* buildJS()
- * Create a map using Google's JavaScript API
- */
+/* geocoding from google
+https://developers.google.com/maps/documentation/javascript/geocoding
+ var geocoder;
+  var map;
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 8,
+      center: latlng
+    }
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  }
+
+ function codeAddress() {
+    var address = document.getElementById("address").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+*/
+
 function buildJS(amap) {
   var el = document.createElement('div'),
     map = document.getElementById('map' + amap.id),
@@ -28,8 +57,6 @@ function buildJS(amap) {
     el.classList.add('amap-container');
     el.setAttribute('id', amap.id + 'embed');
 
-    // Geocode the address. If we have a match, then go ahead and make us a map.
-    // https://developers.google.com/maps/documentation/javascript/geocoding
     geocoder.geocode( { 'address': amap.addr }, function( results, status ) {
 
       if (status == google.maps.GeocoderStatus.OK) {
@@ -38,14 +65,20 @@ function buildJS(amap) {
           zoom : amap.zoom,
           center : results[0].geometry.location,
           styles : amap.style,
+          backgroundColor: "none"
         };
         
+        console.log ( amap.style );
+
         gmap = new google.maps.Map(el, mapOptions);
         var marker = new google.maps.Marker({
             map: gmap,
-            position: results[0].geometry.location
+            position: results[0].geometry.location,
+            icon: amap.icon
         });
         
+        console.log ( gmap );
+
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
@@ -56,9 +89,6 @@ function buildJS(amap) {
 
 }
 
-/* buildEmbed()
- * The quick and easy way to build in a map in an iframe.
- */
 function buildEmbed(amap) {
   var el = document.createElement('div'),
     map = document.getElementById('map' + amap.id);
@@ -70,9 +100,6 @@ function buildEmbed(amap) {
   map.insertBefore(el, map.firstChild);
 }
 
-/* buildStatic()
- * Make a static map for smaller displays.
- */
 function buildStatic(amap) {
   var linkid = 'maplink' + amap.id,
     mapLink = document.getElementById(linkid).getAttribute('href'),
