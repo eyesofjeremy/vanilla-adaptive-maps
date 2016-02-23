@@ -48,6 +48,11 @@ class vanilla_adaptive_maps {
     // can tweak. In particular, it would be nice to be able to adjust the breakpoints.
     $output .= vanilla_adaptive_maps::print_map_styles();
 
+    // Add a link to the options page. Make your life easier.
+    if( current_user_can( 'manage_options') ) {
+      $output .= '<a href="' . get_admin_url( null, 'options-general.php?page=vamap-setting-admin' ) . '" class="post-edit-link">Map Settings</a>';
+    }
+
     $output .= '
 </div><!-- adaptive map -->
 ';
