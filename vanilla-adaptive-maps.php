@@ -124,7 +124,7 @@ class vanilla_adaptive_maps {
       icon : '$map_icon',
       style : $map_style,
       staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=$static_icon' + address + '&size=' + staticSize + '&style=' + '$static_style' + '&sensor=true',
-      embedMap : '<iframe width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
+      embedMap : '<iframe title=\"Google map to ' + address + '\" width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
     };
 
     buildMap(amap$map_id);
