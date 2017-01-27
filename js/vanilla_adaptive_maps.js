@@ -1,9 +1,15 @@
 function buildMap(amap) {
-  var sw = document.body.clientWidth;
 
-  if (sw > amap.bp) {
-    if ( amap.style !== '' ) {
-      if ( document.getElementById(amap.id + 'embed') == null ) {
+  // Check if the window is wider than our setting for static maps.
+  // If it is, we'll be serving up a dynamic map.
+  if ( document.body.clientWidth > amap.bp ) {
+
+    // If we have style settings saved, then we will build the map
+    // natively using Google's JavaScript library so we can style it.
+    if ( amap.hasOwnProperty('style') && window.hasOwnProperty('google') ) {
+
+      // Check to see we haven't built a map already
+      if ( document.getElementById(amap.id + 'js') == null ) {
         buildJS(amap);
       }
     } else {
@@ -55,7 +61,7 @@ function buildJS(amap) {
     gmap;
 
     el.classList.add('amap-container');
-    el.setAttribute('id', amap.id + 'embed');
+    el.setAttribute('id', amap.id + 'js');
 
     geocoder.geocode( { 'address': amap.addr }, function( results, status ) {
 
