@@ -146,15 +146,42 @@ class vanilla_adaptive_maps {
     // get breakpoint for mobile vs desktop
     $breakpoint = vanilla_adaptive_maps::set_breakpoint('px');
 
+    $map_loading = __('Map Loading', 'vanilla-adaptive-maps');
     $css = "
 
 <style type='text/css'>
-.static-img {
+.adaptive-map, .static-img {
   display: block;
+  position: relative;
 }
 
 .adaptive-map iframe {
   max-width: 100%;
+}
+
+.adaptive-map:before {
+content: '" . $map_loading . "';
+  display: block;
+  position: absolute;
+  text-align: center;
+  width: 12em;
+  margin-left: -6em;
+  margin-top: -.5em;
+  top: 50%;
+  left: 50%;
+  animation: blink 2s linear 0s infinite;
+  -webkit-animation: blink 2s linear 0s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.0;
+  }
+}
+@-webkit-keyframes blink {
+  50% {
+    opacity: 0.0;
+  }
 }
 
 /* From http://codepen.io/chriscoyier/full/kycDp */
