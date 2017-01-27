@@ -27,8 +27,10 @@ class vanilla_adaptive_maps {
    */
   function map_shortcode( $atts ) {
 
+    $map_address = $atts['addr'];
+
     // Encode address for mapping. This may need to get beefier.
-    $map_address_encoded = str_replace(' ', '+', $atts['addr']);
+    $map_address_encoded = str_replace(' ', '+', $map_address);
 
     // Set up unique ID for the map, so you can have more than one on a page.
     $mid = uniqid();
@@ -41,7 +43,7 @@ class vanilla_adaptive_maps {
 ';
 
     // Script is distinct to this ID, and must be output inline.
-    $output .= vanilla_adaptive_maps::print_map_script($map_address_encoded, $mid);
+    $output .= vanilla_adaptive_maps::print_map_script($map_address, $map_address_encoded, $mid);
     
     // For now, we are inlining CSS as well. I realize this is not "the WordPress Way"
     // but this reduces the requests, and the CSS may eventually be something the user
@@ -81,7 +83,7 @@ class vanilla_adaptive_maps {
    * Print Map Script
    * Output the individual script for your particular map shortcode
    */
-  function print_map_script($map_address_encoded, $map_id) {
+  function print_map_script($map_address, $map_address_encoded, $map_id) {
     
     $options = get_option('vamap_style');
 
@@ -124,7 +126,7 @@ class vanilla_adaptive_maps {
       icon : '$map_icon',
       style : $map_style,
       staticMap : 'http://maps.google.com/maps/api/staticmap?center=' + address + '&markers=$static_icon' + address + '&size=' + staticSize + '&style=' + '$static_style' + '&sensor=true',
-      embedMap : '<iframe title=\"Google map to ' + address + '\" width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
+      embedMap : '<iframe title=\"Google map to $map_address\" width=\"980\" height=\"650\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.com/maps?q=' + address + '&output=embed\"></iframe>',
     };
 
     buildMap(amap$map_id);
