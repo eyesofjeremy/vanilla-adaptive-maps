@@ -21,23 +21,23 @@ class VAMSettingsPage
     public function add_plugin_page()
     {
         // This page will be under "Settings"
-        add_options_page(
+        $page = add_options_page(
             'Vanilla Adaptive Maps Settings', 
             'Vanilla Adaptive Maps Settings', 
             'manage_options', 
             'vamap-setting-admin', 
             array( $this, 'create_admin_page' )
         );
+        
+        add_action( 'admin_print_scripts-' . $page, array( $this, 'enqueue_scripts' ) );
     }
     
     /**
-     * Load settings JS & CSS
+     * Register settings JS
      * @return void
      */
-    public function settings_assets() {
+    public function register_scripts() {
 
-    // Include WP Media Scripts
-    wp_enqueue_media();
     wp_register_script(
       'vam-admin-js', // script hook
       plugins_url( '/js/options.js' , __FILE__ ), // script location
@@ -45,6 +45,17 @@ class VAMSettingsPage
       '1.0.0', // script version
       true // in footer?
     );
+	}
+
+
+    /**
+     * Enqueue settings JS
+     * @return void
+     */
+    public function enqueue_scripts() {
+
+    // Include WP Media Scripts
+    wp_enqueue_media();
     wp_enqueue_script( 'vam-admin-js' );
 	}
 
@@ -112,8 +123,8 @@ class VAMSettingsPage
             'vamap-setting-admin', // Page
             'vamap_style_settings' // Section           
         );
-        
-        VAMSettingsPage::settings_assets();    
+
+        VAMSettingsPage::register_scripts();
     }
 
     /**
@@ -215,4 +226,9 @@ rather than embedding it.</p>
 
 if( is_admin() ) {
   $my_settings_page = new VAMSettingsPage();
+  
+  $page = 'vamaps-options';
+
+  /* Using registered $page handle to hook script load */
+  add_action('admin_enqueue_scripts-' . $page, array($my_settings_page, 'register_map_options_scripts') );
 }
