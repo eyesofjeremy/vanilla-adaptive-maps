@@ -1,3 +1,7 @@
+/*
+ * buildMap(amap)
+ * What map are we going to build?
+ */
 function buildMap(amap) {
 
   // Check if the window is wider than our setting for static maps.
@@ -12,12 +16,19 @@ function buildMap(amap) {
       if ( document.getElementById(amap.id + 'js') == null ) {
         buildJS(amap);
       }
-    } else {
+
+    } else { // Otherwise we will embed an iframe map.
+
+      // Check to see we haven't built a map already
       if ( document.getElementById(amap.id + 'embed') == null ) {
         buildEmbed(amap);
       }
     }
+
+  // If the window is narrower than our setting, get a static map
   } else {
+
+    // Check to see we haven't built a map already
     if ( document.getElementById(amap.id + 'static') == null ) {
       buildStatic(amap);
     }
@@ -54,6 +65,10 @@ https://developers.google.com/maps/documentation/javascript/geocoding
   }
 */
 
+/*
+ * buildJS(amap)
+ * Builds a map using Google's API directly on the page
+ */
 function buildJS(amap) {
   var el = document.createElement('div'),
     map = document.getElementById('map' + amap.id),
@@ -92,9 +107,12 @@ function buildJS(amap) {
   });
 
   map.insertBefore(el, map.firstChild);
-
 }
 
+/*
+ * buildEmbed(amap)
+ * insert a map embedded in an iframe
+ */
 function buildEmbed(amap) {
   var el = document.createElement('div'),
     map = document.getElementById('map' + amap.id);
@@ -106,6 +124,10 @@ function buildEmbed(amap) {
   map.insertBefore(el, map.firstChild);
 }
 
+/*
+ * buildStatic(amap)
+ * create an image based on Google's static maps API
+ */
 function buildStatic(amap) {
   var linkid = 'maplink' + amap.id,
     mapLink = document.getElementById(linkid).getAttribute('href'),

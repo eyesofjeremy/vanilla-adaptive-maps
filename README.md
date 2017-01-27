@@ -7,6 +7,7 @@ Vanilla Adaptive Maps includes:
 
 * `ChangeLog.md`. The list of changes to the core project.
 * `README.md`. The file that you’re currently reading.
+* `deploy.sh`. A script used for deploying the git repository into WordPress's SVN plugin repository. > ahem < this is not currently working properly.
 * A `vanilla-adaptive-maps` subdirectory that contains the source code - a fully executable WordPress plugin.
 
 ## Features
@@ -15,6 +16,7 @@ Quick and easy shortcode to include, based on a street address:
 * A link to a map of that street address,
 * a static Google map of the street address for small screens, and
 * an embedded full-featured Google map for larger screens.
+* Ability to style maps and add custom marker for the address.
 
 ## Installation
 

@@ -4,7 +4,7 @@
 Plugin Name: Vanilla Adaptive Maps
 Plugin URI: https://github.com/eyesofjeremy/vanilla-adaptive-maps/
 Description: Include an adaptive map based on a street address with a simple shortcode. No JavaScript library required.
-Version: 1.0.1
+Version: 1.1
 Author: Jeremy Carlson
 Author http://jeremycarlson.com/
 License: GPL-2.0+
@@ -17,6 +17,11 @@ if ( ! defined( 'WPINC' ) ) {
 
 class vanilla_adaptive_maps {
 
+  /*
+   * Set breakpoint
+   * TODO: make this accessible via the options page.
+   * I'd like to think about that one more carefully though.
+   */
   function set_breakpoint( $units = false ) {
     return '550' . $units;
   }
@@ -59,6 +64,7 @@ class vanilla_adaptive_maps {
 </div><!-- adaptive map -->
 ';
     
+    // Okay, let's do this! Get the JS functions for building the map
     wp_enqueue_script( 'vanilla-adaptive-maps' );
 
     // If we need the JavaScript API, let's go get 'er.
@@ -66,6 +72,7 @@ class vanilla_adaptive_maps {
     if( vanilla_adaptive_maps::use_jsapi() ) {
       wp_enqueue_script( 'vanilla-adaptive-maps-google-maps' );
     }
+
     return $output;
   }
   
