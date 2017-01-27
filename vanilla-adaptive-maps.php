@@ -269,7 +269,7 @@ content: '" . $map_loading . "';
 
       wp_register_script(
         'vanilla-adaptive-maps-google-maps', // script hook
-        'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true&key=' . $api_key, // script location
+        'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . $api_key, // script location
         array(), // dependencies
         '1.0.0', // script version
         true // in footer?
